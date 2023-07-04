@@ -15,9 +15,9 @@ jobs:
     steps:
       - name: Create the Mattermost Message
         run: |
-          echo $(ls ${pwd}) && \
+          echo $(ls -la ${pwd}) && \
           echo $(pwd) && \
-          bash ../scripts/mattermost.sh
+          bash ${PWD}/scripts/mattermost.sh
       - uses: mattermost/action-mattermost-notify@master
         env:
           MATTERMOST_WEBHOOK_URL: https://chat.executionlab.asia/hooks/rea9tkua7tf1uns7tr3e6jkgha
