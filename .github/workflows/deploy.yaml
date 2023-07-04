@@ -12,7 +12,7 @@ jobs:
     steps:
       - name: Create the Mattermost Message
         run: |
-          echo "{\"text\":\"![](https://img.shields.io/badge/dev-blue?label=environment)  ![](https://img.shields.io/badge/1.0.0-red?label=version)\\n\\nRelease `Frontend` done! :agon-clap: \\nURL: https: //order.dev.banhmipate.com \\n\\n#### :noted: Release notes: \\n---\\n :bulb: **New features:**\\n1. Feature 1\\n2. Feature 2\\n3. Feature 3\\n\\n :ladybug: **Bug fixes:**\\n1. Fix bug 1\\n2. Fix bug 2\\n3. Fix bug 3\\ncc @trang.nguyen @toan.le @vy.huynh @giau.nguyen @hung.huynh @thu.bui @danh.nguyen\\\"}\"}" > mattermost.json
+          echo "{\"text\":\"![](https://img.shields.io/badge/dev-blue?label=environment)  ![](https://img.shields.io/badge/1.0.0-red?label=version)\\n\\nRelease `Frontend` done! :agon-clap: \\nURL: https: //order.dev.banhmipate.com \\n\\n#### :noted: Release notes: \\n---\\n:bulb: **New features:**\\n- Feature 1\\n- Feature 2\\n- Feature 3\\n---\\n:ladybug: **Bug fixes:**\\n- Fix bug 1\\n- Fix bug 2\\n- Fix bug 3\\n\\ncc @trang.nguyen @toan.le @vy.huynh @giau.nguyen @hung.huynh @thu.bui @danh.nguyen\\\"}\"}" > mattermost.json
       - uses: mattermost/action-mattermost-notify@master
         env:
           MATTERMOST_WEBHOOK_URL: https://chat.executionlab.asia/hooks/rea9tkua7tf1uns7tr3e6jkgha
