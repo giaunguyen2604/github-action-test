@@ -10,13 +10,19 @@ env:
   BUG_NOTES: ${{ secrets.DEV_BUG_NOTES }}
 
 jobs:
+  setup_env:
+    runs-on: ubuntu-latest
+    steps:
+      - name: setup env
+        run: | 
+        echo "APP_VERSION=$(bash .github/scripts/version.sh)" >> $GITHUB_ENV
+  
   notify_mattermost:
     runs-on: ubuntu-latest
     steps:
       - name: Create the Mattermost Message
         run: |
-          VERSION=$(bash ./version.sh) && \
-          echo "{\"text\":\"![](https://img.shields.io/badge/dev-blue?label=environment)  ![](https://img.shields.io/badge/${VERSION}-red?label=version)\\n\\nRelease `Frontend` done! :agon-clap: \\nURL: https://order.dev.banhmipate.com\\n\\n#### :noted: Release notes: \\n---\\n:bulb: **New features/Enhancements:**\\n${FEAT_NOTES}\\n---\\n:ladybug: **Bug fixes:**\\n${BUG_NOTES}\\ncc @trang.nguyen @toan.le @vy.huynh @giau.nguyen @hung.huynh @thu.bui @danh.nguyen\\\"}\"}" > mattermost.json 
+          echo "{\"text\":\"![](https://img.shields.io/badge/dev-blue?label=environment)  ![](https://img.shields.io/badge/${APP_VERSION}-red?label=version)\\n\\nRelease `Frontend` done! :agon-clap: \\nURL: https://order.dev.banhmipate.com\\n\\n#### :noted: Release notes: \\n---\\n:bulb: **New features/Enhancements:**\\n${FEAT_NOTES}\\n---\\n:ladybug: **Bug fixes:**\\n${BUG_NOTES}\\ncc @trang.nguyen @toan.le @vy.huynh @giau.nguyen @hung.huynh @thu.bui @danh.nguyen\\\"}\"}" > mattermost.json 
       - uses: mattermost/action-mattermost-notify@master
         env:
           MATTERMOST_WEBHOOK_URL: https://chat.executionlab.asia/hooks/rea9tkua7tf1uns7tr3e6jkgha
