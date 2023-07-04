@@ -5,14 +5,16 @@ on:
     tags:
       - release-*
 
-jobs:
+env:
+  NOTES: ${{ secrets.DEV_NOTES }}
 
+jobs:
   notify_mattermost:
     runs-on: ubuntu-latest
     steps:
       - name: Create the Mattermost Message
         run: |
-          echo "{\"text\":\"![](https://img.shields.io/badge/dev-blue?label=environment)  ![](https://img.shields.io/badge/1.1.0-red?label=version)\\n\\nRelease `Frontend` done! :agon-clap: \\nURL: https://order.dev.banhmipate.com\\n\\n#### :noted: Release notes: \\n---\\n:bulb: **New features/Enhancements:**\\n- EOS-371\\n- EOS-366\\n- Display version badge on demo, dev env\\n---\\n:ladybug: **Bug fixes:**\\n\\ncc @trang.nguyen @toan.le @vy.huynh @giau.nguyen @hung.huynh @thu.bui @danh.nguyen\\\"}\"}" > mattermost.json
+          echo "{\"text\":\"![](https://img.shields.io/badge/dev-blue?label=environment)  ![](https://img.shields.io/badge/1.1.0-red?label=version)\\n\\nRelease `Frontend` done! :agon-clap: \\nURL: https://order.dev.banhmipate.com\\n\\n#### :noted: Release notes: \\n---\\n:bulb: **New features/Enhancements:**\\n${NOTES}\\n---\\n:ladybug: **Bug fixes:**\\n\\ncc @trang.nguyen @toan.le @vy.huynh @giau.nguyen @hung.huynh @thu.bui @danh.nguyen\\\"}\"}" > mattermost.json
       - uses: mattermost/action-mattermost-notify@master
         env:
           MATTERMOST_WEBHOOK_URL: https://chat.executionlab.asia/hooks/rea9tkua7tf1uns7tr3e6jkgha
