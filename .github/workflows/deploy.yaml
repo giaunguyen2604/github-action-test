@@ -15,7 +15,8 @@ jobs:
     steps:
       - name: Create the Mattermost Message
         run: |
-          echo $(ls ${GITHUB_WORKSPACE}) && \
+          echo $(ls ${pwd}) && \
+          echo $(pwd) && \
           bash ../scripts/mattermost.sh
       - uses: mattermost/action-mattermost-notify@master
         env:
