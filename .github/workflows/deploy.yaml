@@ -15,7 +15,7 @@ jobs:
     steps:
       - name: setup env
         run: | 
-        echo "APP_VERSION=$(bash .github/scripts/version.sh)" >> $GITHUB_ENV
+          echo "APP_VERSION=$(bash .github/scripts/version.sh)" >> $GITHUB_ENV
   
   notify_mattermost:
     runs-on: ubuntu-latest
