@@ -26,9 +26,14 @@ jobs:
     runs-on: ubuntu-latest
     needs: setup_env
     steps:
+      - name: Checkout current commit
+        uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
       - name: Create the Mattermost Message
         run: |
-          echo "{\"text\":\"![](https://img.shields.io/badge/dev-blue?label=environment)  ![](https://img.shields.io/badge/${APP_VERSION}-red?label=version)\\n\\nRelease `Frontend` done! :agon-clap: \\nURL: https://order.dev.banhmipate.com\\n\\n#### :noted: Release notes: \\n---\\n:bulb: **New features/Enhancements:**\\n${FEAT_NOTES}\\n---\\n:ladybug: **Bug fixes:**\\n${BUG_NOTES}\\ncc @trang.nguyen @toan.le @vy.huynh @giau.nguyen @hung.huynh @thu.bui @danh.nguyen\\\"}\"}" > mattermost.json 
+          echo $(ls -la /home/runner/work/github-action-test) && \
+          bash .github/scripts/mattermost.sh 
       - uses: mattermost/action-mattermost-notify@master
         env:
           MATTERMOST_WEBHOOK_URL: https://chat.executionlab.asia/hooks/rea9tkua7tf1uns7tr3e6jkgha
