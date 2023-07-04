@@ -2,8 +2,8 @@ name: deploy_test
 
 on:
   push:
-    branch:
-      - main
+    tag:
+      - release-*
 
 env:
   FEAT_NOTES: ${{ secrets.DEV_FEAT_NOTES }}
@@ -19,8 +19,7 @@ jobs:
           fetch-depth: 2
       - name: Create the Mattermost Message
         run: |
-          echo $(ls -la /home/runner/work/github-action-test) && \
-          bash .github/scripts/mattermost.sh 
+          bash .github/scripts/mattermost.sh production
       - uses: mattermost/action-mattermost-notify@master
         env:
           MATTERMOST_WEBHOOK_URL: https://chat.executionlab.asia/hooks/rea9tkua7tf1uns7tr3e6jkgha
