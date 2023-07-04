@@ -2,8 +2,8 @@ name: deploy_test
 
 on:
   push:
-    tags:
-      - release-*
+    branch:
+      - main
 
 env:
   FEAT_NOTES: ${{ secrets.DEV_FEAT_NOTES }}
@@ -17,14 +17,15 @@ jobs:
         run: | 
           echo "APP_VERSION=$(bash .github/scripts/version.sh)" >> $GITHUB_ENV
   
-  notify_mattermost:
-    runs-on: ubuntu-latest
-    steps:
-      - name: Create the Mattermost Message
-        run: |
-          echo "{\"text\":\"![](https://img.shields.io/badge/dev-blue?label=environment)  ![](https://img.shields.io/badge/${APP_VERSION}-red?label=version)\\n\\nRelease `Frontend` done! :agon-clap: \\nURL: https://order.dev.banhmipate.com\\n\\n#### :noted: Release notes: \\n---\\n:bulb: **New features/Enhancements:**\\n${FEAT_NOTES}\\n---\\n:ladybug: **Bug fixes:**\\n${BUG_NOTES}\\ncc @trang.nguyen @toan.le @vy.huynh @giau.nguyen @hung.huynh @thu.bui @danh.nguyen\\\"}\"}" > mattermost.json 
-      - uses: mattermost/action-mattermost-notify@master
-        env:
-          MATTERMOST_WEBHOOK_URL: https://chat.executionlab.asia/hooks/rea9tkua7tf1uns7tr3e6jkgha
-          MATTERMOST_USERNAME: test_deployment
-          MATTERMOST_ICON: https://banhmipate.com/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2022/03/banh-mi-pate-truyenthong.png.webp
+  # notify_mattermost:
+  #   runs-on: ubuntu-latest
+  #   needs: setup_env
+  #   steps:
+  #     - name: Create the Mattermost Message
+  #       run: |
+  #         echo "{\"text\":\"![](https://img.shields.io/badge/dev-blue?label=environment)  ![](https://img.shields.io/badge/${APP_VERSION}-red?label=version)\\n\\nRelease `Frontend` done! :agon-clap: \\nURL: https://order.dev.banhmipate.com\\n\\n#### :noted: Release notes: \\n---\\n:bulb: **New features/Enhancements:**\\n${FEAT_NOTES}\\n---\\n:ladybug: **Bug fixes:**\\n${BUG_NOTES}\\ncc @trang.nguyen @toan.le @vy.huynh @giau.nguyen @hung.huynh @thu.bui @danh.nguyen\\\"}\"}" > mattermost.json 
+  #     - uses: mattermost/action-mattermost-notify@master
+  #       env:
+  #         MATTERMOST_WEBHOOK_URL: https://chat.executionlab.asia/hooks/rea9tkua7tf1uns7tr3e6jkgha
+  #         MATTERMOST_USERNAME: test_deployment
+  #         MATTERMOST_ICON: https://banhmipate.com/wp-content/webp-express/webp-images/doc-root/wp-content/uploads/2022/03/banh-mi-pate-truyenthong.png.webp
